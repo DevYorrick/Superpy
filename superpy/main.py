@@ -94,19 +94,19 @@ def move_to_expired(item):
 def buy_item(item, quantity, bought_price, sold_price, expiration_date):
     rows = []
 
-    with open('test_inventory.csv', 'r') as file:
-        reader = list(csv.DictReader(file))  # Convert reader to a list
+    with open('test_inventory.csv', 'r+', newline='') as file:
+        reader = csv.DictReader(file)
+        rows = list(reader)
 
-        matching_rows = [row for row in reader if row['product_name'] == item and row['expiration_date'] == expiration_date]
+        matching_rows = [row for row in rows if row['product_name'] == item and row['expiration_date'] == expiration_date]
 
         if matching_rows:
             # If item with the same expiration date exists, add quantity to that row
-            for row in reader:
+            for row in rows:
                 if row['product_name'] == item and row['expiration_date'] == expiration_date:
                     current_quantity = int(row['quantity'])
                     quantity = int(quantity)
                     row['quantity'] = str(current_quantity + quantity)
-                rows.append(row)
         else:
             # If no matching item, create a new row
             rows.append({
@@ -117,12 +117,16 @@ def buy_item(item, quantity, bought_price, sold_price, expiration_date):
                 'expiration_date': expiration_date
             })
 
-    # Write all items to test_inventory.csv
-    with open('test_inventory.csv', 'w', newline='') as file:
-        fieldnames = ['product_name', 'quantity', 'bought_price', 'sold_price', 'expiration_date']
-        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        # Set the file cursor back to the beginning before writing
+        file.seek(0)
+
+        # Write all items to test_inventory.csv
+        writer = csv.DictWriter(file, fieldnames=['product_name', 'quantity', 'bought_price', 'sold_price', 'expiration_date'])
         writer.writeheader()
         writer.writerows(rows)
+
+        # Truncate the file in case the new content is shorter than the old content
+        file.truncate()
 
     print(f"Added {quantity} {item}(s) to the inventory.")
 
