@@ -1,0 +1,9 @@
+product_name,quantity,bought_price,sold_price,expiration_date
+Melons,5,2.0,8,2023-12-10
+Grapes,970,0.8,2,2023-12-10
+Melons,20,2.0,8,2023-11-30
+Grapes,40,0.8,2,2023-11-30
+Oranges,25,1.0,4,2023-11-28
+Apples,80,0.5,5,2023-12-08
+Mangos,180,1.2,6.5,2023-12-08
+Melons,95,2,8,2023-12-08
