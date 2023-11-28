@@ -1,1 +1,14 @@
-hello
+300 word short report that highlights 3 technical elements of my code.
+
+For the 3 elements I chose the advance_time function, the display_inventory function and the buy function.
+
+The advance_time function was the second function I created after the display inventory function. Of course it changed a lot as I progressed into my code and even split up into 2 functions. 
+It is the only function in my code besides the buy function that requires user input. I prefer adding user input over having arguments in the argparse terminal command since it seems more user friendly.
+
+The display_inventory function is the first function that I created. Originally I had it running on a while loop so that you would automatically be returned to the menu after being done with a command.
+It is in my opinion more user friendly again, mostly because by doing that you did not need commands but instead just type in your menu option which it would show you. So instead of running parser.add_argument it would run a while(true) loop.
+Both options run a if, elif and else loop.
+
+The buy function I changed a lot over time. Originally I had it as an original argparse command where you would have to put in the command python main.py --buy Apples 10 0.5 5 2023-12-08. Instead it not requires user input.
+When calling on the buy function it now only requires you to do the command python main.py --buy. Upon pressing enter it will ask you what products you want to buy and provides a list. Type in the name of the product and it will then ask a quantity and done.
+No need to put in the buying price and selling price, instead I automized all of that in order to provide a quicker input and I presume the buying price is fixed instead of variable. If it changes you only need to change 1 number instead of having to input it every single time.
