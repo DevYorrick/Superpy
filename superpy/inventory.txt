@@ -1,4 +1,0 @@
-name,price,count
-Apple, 2, 6, 
-Orange, 1, 10
-Steak, 6, 10
