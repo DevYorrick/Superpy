@@ -1,4 +1,4 @@
-# Superpy
+# Superpy User Guide
 Second draft of superpy
 
 When making Superpy I was a bit clueless and lost in the beginning but after searching up some youtube tutorials and using my previous experience with Python I got to work. It took some time since I work besides this but eventually I started making a lot of progress.
