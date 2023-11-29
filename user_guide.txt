@@ -1,0 +1,83 @@
+Introduction
+This program is meant for a supermarket, it is a inventory management tool. the functionalities include: setting a specific time, advancing time forwards and backwards, buying specific items
+that the supermarket has placed in the system, saving all the bought, sold and expired products to different csv files, selling the products in the inventory.csv file, setting a specific date,
+reporting on revenue on certain dates and lastly exporting a graph that shows revenue over time. 
+
+requirements:
+
+    - python (3.11.4)
+    - argparse ()
+    - rich ()
+    - matplot ()
+    - csv ()
+    - datetime ()
+    - pandas ()
+
+functions:
+
+
+1. Inventory Display
+
+Description: Displays the current inventory from the inventory.csv file. This function uses the rich module
+
+Usage: python main.py --Display
+
+
+2. Buying items
+
+Descirption: Buy specific inventory from a certain product. Because the products are set the process is quite easy and does not require much user input. The reason why the input is not open
+is to avoid the user having to fill in the buying price, sold price and expiration date every single time they buy an item. Instead if a new item is being bought they input it in the system
+once and the new item will be available. Same for updating current items.
+
+Usage: python main.py --buy
+       If a new product needs to be added: 1. go to main.py, open the function called buy_item and input the new product with its product price and sold price into product_prices just like the
+       other products. 2. Add the product in the string of product_name on the 65th line. Done? Then your new item is ready to be sold
+       If a product needs to be update: 1. go to main.py, open the function called buy_item and change the sold price and bought price accordingly.
+
+
+3. Selling items
+
+Description: Sell items that are in the inventory.csv file which will transfer them to the sold.csv file to archive them and to report on their revenue. 
+The reason this has no user input is to show that I can use both user input functions and argparse input functions. I would prefer to change this to user input but for the sake of it being
+for a homework assignment I kept it as argparse input using nargs in the parser.
+
+Usage: python main.py --sell Melons 10
+
+
+4. Advancing time
+
+Description: Advance the time both forwards and backwards in the file. The date.txt file will be adjusted upon running this command. This date.txt file is the base date used throughout this code.
+Once again this function does not take in argparse commands and will ask the user for input (0 is an option).
+
+Usage: python main.py --advance-time
+
+
+5. Display revenue
+
+Description: Show revenue on a certain date mentioned in the argparse command. The code will run through the sold.csv and look at when certain items where sold and calculate revenue for that day.
+
+Usage: python main.py --revenue 2023-11-29
+
+
+6. Display revenue over time
+
+Description: This function provides the user with a graph showing the profit made over a certain amount of days. This function uses the matplot library.
+
+Usage: python main.py --revenue_over_time
+
+
+7. Set a specific date
+
+Descirption: This function changes the date in date.txt to a date specified by the user input when the function is called upon. 
+
+Usage: python main.py --set-date
+
+
+Notes:
+
+After listening to the video feedback from my last draft I changed some things around and added more functionalities to the date.py file. I moved all functionalities that change the date and
+which are related to these changed days to the date.py file. This reduces my main.py file to 267 lines instead of 335. I could have clustered the buy and sell function together in an items.py
+file for example but I do not see much use in that currently. If my code would expand and more functionalities would need to be added then I would probably do that to keep the code clear.
+I had a small user guide in my README.md file but I did not have a clear idea of what would need to be included in this user guide but thanks to the video feedback I got a clearer idea of the
+requirements needed. I hope I have not missed any functionalities since my deadline for the study is coming up and I have done my best to make the most out of the time that I have. 
+If needed would it be possible to extend my deadline? If I fail Superpy again that is. Kind regards Yorrick Reuser
