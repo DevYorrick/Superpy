@@ -1,5 +1,5 @@
 # Superpy User Guide
-Second draft of superpy
+Third draft of superpy
 
 When making Superpy I was a bit clueless and lost in the beginning but after searching up some youtube tutorials and using my previous experience with Python I got to work. It took some time since I work besides this but eventually I started making a lot of progress.
 I personally do not see the use of argparse since I believe a while loop is more user friendly but thats probably because I do not have much experience and haven't worked with massive files. In the end I figured out how argparse worked and applied it to my code.
