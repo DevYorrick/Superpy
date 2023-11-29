@@ -50,78 +50,6 @@ def display_inventory():
     except FileNotFoundError:
         console.print("[red]Inventory file not found.[/red]")
 
-def advance_time(days):
-    # Read the current date from date.txt
-    with open('date.txt', 'r') as date_file:
-        current_date = date_file.readline().strip()
-
-    print('Current Date:', current_date)
-    skip_days = int(input("How many days would you like to skip?"))
-
-    # Calculate the new date
-    new_date = advance_time_now(current_date, skip_days)
-    print('New Date:', new_date)
-
-    # Save the new date to the file
-    save_date_to_file('date.txt', new_date)
-
-    # Check for expired items and move them to expired.csv
-    move_expired_items()
-
-def advance_time_now(current_date, days_to_skip):
-    # Convert current_date to a datetime object
-    current_date = datetime.strptime(current_date, '%Y-%m-%d')
-
-    # Calculate the new date by adding days_to_skip
-    new_date = current_date + timedelta(days=days_to_skip)
-
-    # Format the new date as a string in the required format
-    return new_date.strftime('%Y-%m-%d')
-
-def save_date_to_file(file_path, new_date):
-    # Save the new date to the file
-    with open(file_path, 'w') as date_file:
-        date_file.write(new_date)
-
-def move_expired_items():
-    try:
-        # Read the current date from date.txt
-        with open('date.txt', 'r') as date_file:
-            current_date = date_file.readline().strip()
-
-        rows = []
-
-        # Read the inventory.csv file
-        with open('inventory.csv', 'r') as file:
-            reader = csv.DictReader(file)
-
-            # Check expiration_date and move items to expired.csv if expired
-            for row in reader:
-                expiration_date = row['expiration_date']
-                if datetime.strptime(current_date, '%Y-%m-%d') > datetime.strptime(expiration_date, '%Y-%m-%d'):
-                    move_to_expired(row)
-                else:
-                    rows.append(row)
-
-        # Write the remaining items to inventory.csv
-        with open('inventory.csv', 'w', newline='') as file:
-            fieldnames = ['product_name', 'quantity', 'bought_price', 'sold_price', 'expiration_date']
-            writer = csv.DictWriter(file, fieldnames=fieldnames)
-            writer.writeheader()
-            writer.writerows(rows)
-    except Exception as e:
-        print(f"An error occurred: {e}")
-
-def move_to_expired(item):
-    # Move the expired item to expired.csv
-    with open('expired.csv', 'a', newline='') as expired_file:
-        fieldnames = ['product_name', 'quantity', 'bought_price', 'sold_price', 'expiration_date']
-        writer = csv.DictWriter(expired_file, fieldnames=fieldnames)
-        if not expired_file.tell():
-            writer.writeheader()
-        writer.writerow(item)
-    print(f"{item['product_name']} expired and moved to expired.csv")
-
 def buy_item():
     # Mapping of product names to prices
     product_prices = {
@@ -129,12 +57,13 @@ def buy_item():
         'Oranges': {'bought_price': 1, 'sold_price': 4},
         'Mangos': {'bought_price': 1.2, 'sold_price': 6.5},
         'Grapes': {'bought_price': 0.8, 'sold_price': 2},
-        'Melons': {'bought_price': 2, 'sold_price': 8}
+        'Melons': {'bought_price': 2, 'sold_price': 8},
+        'Pears': {'bought_price': 0.6, 'sold_price': 1.5},
     }
 
     try:
         # Get user input for product and quantity
-        product_name = input("What product would you like to buy? (Apples, Oranges, Mangos, Grapes, or Melons): ")
+        product_name = input("What product would you like to buy? (Apples, Oranges, Mangos, Grapes, Melons or Pears): ")
         quantity = int(input(f"How many {product_name} would you like to buy? "))
 
         # Get prices based on the selected product
@@ -313,6 +242,7 @@ def main():
     parser.add_argument('--advance-time', action='store_true', help='Advance time by a specified number of days')
     parser.add_argument('--revenue', metavar='date', help='Specify the date to calculate revenue.')
     parser.add_argument('--revenue_over_time', action='store_true', help='Displays the revenue over time using matplotlib')
+    parser.add_argument('--set-date', action='store_true', help='Set a specific date, no other input besides the --set_date command is needed')
 
     args = parser.parse_args()
 
@@ -328,6 +258,8 @@ def main():
         revenue(args.revenue)
     elif args.revenue_over_time:
         plot_revenue_over_time()
+    elif args.set_date:
+        print(set_date())
     else:
         print("No valid command provided. Use --display, --add, --advance-time or --sell.")
 
